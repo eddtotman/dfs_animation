@@ -12,14 +12,14 @@ def break_pieces(shape):
     first_filler.dfsFill(initial_cord, initial_frame)
     frames.append([first_filler.getFrames()])
     
-    anim_controller = Animation(frames, playback_speed=0.44)
+    anim_controller = Animation(frames, playback_speed=0.4)
     while True:
         anim_controller.playAnimation()
         
         
 
-test_shape = '\n+------------+\n|            |\n|            |\n|            |\n+------+-----+\n|      |     |\n|      |     |\n+------+-----+'
-break_pieces(test_shape)
+#test_shape = '\n+------------+\n|            |\n|            |\n|            |\n+------+-----+\n|      |     |\n|      |     |\n+------+-----+'
+#break_pieces(test_shape)
 
 
 # uncomment next line if you prefer raw error messages

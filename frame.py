@@ -28,7 +28,7 @@ class Frame:
 
     def translateCoordinateToFramePos(self, cord: FrameCoordinate):
         # Plus 2 for '\n'
-        return cord.x * (self.findLineLength() + 2) + cord.y
+        return 1 + cord.x * (self.findLineLength() + 1) + cord.y
     
     def getCharAt(self, cord: FrameCoordinate) -> str:
         return self.frame[self.translateCoordinateToFramePos(cord)]
