@@ -3,21 +3,29 @@ from frame import Frame
 from animation import Animation
 from frame_coordinate import FrameCoordinate
 
-def break_pieces(shape):
+def animate_dfs(shape):
     initial_frame = Frame(shape)
-    initial_cord = FrameCoordinate(1,1)
-    filling = '1'                                                                                                                                                               
-    first_filler = FrameFiller(filling, initial_frame)
-    first_filler.dfsFill(initial_cord)
+    frames = [initial_frame]
+    filling = 1
+    latest_frame = initial_frame
+    while latest_frame.hasWhiteSpace():                                                                                                                                          
+        filler = FrameFiller(str(filling), latest_frame)
+        filler.dfsFill(latest_frame.pickRandomWhitespace())
+        frames += filler.getFrames()
+        filling = (filling + 1) % 10
+        latest_frame = frames[len(frames)-1]
+        
     
-    anim_controller = Animation(first_filler.getFrames(), playback_speed=0.4)
-    while True:
-        anim_controller.playAnimation()
+    anim_controller = Animation(frames, playback_speed=0.2)
+    anim_controller.playOnce()
         
         
 
-test_shape = '\n+------------+\n|            |\n|            |\n|            |\n+------+-----+\n|      |     |\n|      |     |\n+------+-----+'
-break_pieces(test_shape)
+#test_shape = '\n+------------+\n|            |\n|            |\n|            |\n+------+-----+\n|      |     |\n|      |     |\n+------+-----+'
+#test_shape = '\n         +------------+--+      +--+\n         |            |  |      |  |\n         | +-------+  |  |      |  |\n         | |       |  |  +------+  |\n         | |       |  |            |\n         | |       |  |    +-------+\n         | +-------+  |    |        \n +-------+            |    |        \n |       |            |    +-------+\n |       |            |            |\n +-------+            |            |\n         |            |            |\n    +----+---+--+-----+------------+\n    |    |   |  |     |            |\n    |    |   |  +-----+------------+\n    |    |   |                     |\n    +----+---+---------------------+\n    |    |                         |\n    |    | +----+                  |\n+---+    | |    |     +------------+\n|        | |    |     |             \n+--------+-+    +-----+             '
+#test_shape='\n+---+------------+---+\n|   |            |   |\n+---+------------+---+\n|   |            |   |\n|   |            |   |\n|   |            |   |\n|   |            |   |\n+---+------------+---+\n|   |            |   |\n+---+------------+---+'
+#test_shape='\n+--------+\n|        |\n|  +--+  |\n|  |  |  |\n|  +--+  |\n|        |\n+--------+'
+#animate_dfs(test_shape)
 
 
 # uncomment next line if you prefer raw error messages

@@ -9,7 +9,11 @@ class Animation:
         self.playback_speed = playback_speed
 
     def playAnimation(self) -> None:
+        while True:
+            self.playOnce()
+
+    def playOnce(self) -> None:
         for frame in self.frames:
-            frame.printFrame()
-            sleep(self.playback_speed)
-            os.system('clear')
+                frame.printFrame()
+                sleep(self.playback_speed)
+                os.system('clear')

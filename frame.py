@@ -6,6 +6,8 @@ from frame_coordinate import FrameCoordinate
 class Frame:
     def __init__(self, initial_frame: str, edges: List[str] = ['-', '|', '+']) -> None:
         self.frame = initial_frame
+        if self.frame[0] == '\n':
+            self.frame = self.frame[1:len(self.frame)]
         self.edges = edges
 
     def __str__(self) -> str:
@@ -29,10 +31,13 @@ class Frame:
 
     def translateCoordinateToFramePos(self, cord: FrameCoordinate):
         # Plus 1 for '\n'
-        return 1 + cord.x * (self.findLineLength() + 1) + cord.y
+        return cord.x * (self.findLineLength() + 1) + cord.y
     
     def getCharAt(self, cord: FrameCoordinate) -> str:
-        return self.frame[self.translateCoordinateToFramePos(cord)]
+        pos = self.translateCoordinateToFramePos(cord)
+        if pos < 0 or pos >= self.len():
+            return '-'
+        return self.frame[pos]
 
     def isEdge(self, cord: FrameCoordinate) -> bool:
         return self.getCharAt(cord) in self.edges
@@ -46,14 +51,18 @@ class Frame:
     def len(self) -> int:
         return len(self.frame)
 
-    #def numLines(self) -> int:
-    #    return 
+    def numLines(self) -> int:
+        return len(self.frame.split("\n")) - 1
 
-    #def pickRandomCoordinate(self) -> FrameCoordinate:
-    #    rand_x = 
+    def pickRandomCoordinate(self) -> FrameCoordinate:
+        rand_x = random.randrange(0, self.numLines())
+        rand_y = random.randrange(0, self.findLineLength())
+        return FrameCoordinate(rand_x, rand_y)
 
     def pickRandomWhitespace(self) -> FrameCoordinate:
-        choice = random.randrange(1, self.len())
+        choice = self.pickRandomCoordinate()
         
-        while choice != ' ':
-            choice = random.randrange(1, self.len())
+        while self.getCharAt(choice) != ' ':
+            choice = self.pickRandomCoordinate()
+
+        return choice
