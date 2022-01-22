@@ -1,4 +1,5 @@
 import sys
+import random
 from typing import List
 from frame_coordinate import FrameCoordinate
 
@@ -27,7 +28,7 @@ class Frame:
         sys.stdout.flush()
 
     def translateCoordinateToFramePos(self, cord: FrameCoordinate):
-        # Plus 2 for '\n'
+        # Plus 1 for '\n'
         return 1 + cord.x * (self.findLineLength() + 1) + cord.y
     
     def getCharAt(self, cord: FrameCoordinate) -> str:
@@ -38,3 +39,21 @@ class Frame:
 
     def hasWhiteSpace(self) -> bool:
         return ' ' in self.frame
+    
+    def isValidCoordinate(self, cord: FrameCoordinate) -> bool:
+        return self.getCharAt(cord) == ' '
+
+    def len(self) -> int:
+        return len(self.frame)
+
+    #def numLines(self) -> int:
+    #    return 
+
+    #def pickRandomCoordinate(self) -> FrameCoordinate:
+    #    rand_x = 
+
+    def pickRandomWhitespace(self) -> FrameCoordinate:
+        choice = random.randrange(1, self.len())
+        
+        while choice != ' ':
+            choice = random.randrange(1, self.len())
